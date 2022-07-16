@@ -10,10 +10,11 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const user_module_1 = require("./api/user.module");
 const configuration_1 = require("./configuration/configuration");
-console.log('----------------------------');
+console.log("----------------------------");
 console.log(`.env.${process.env.NODE_ENV}`);
-console.log('----------------------------');
+console.log("----------------------------");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -21,14 +22,15 @@ AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({
                 envFilePath: `./src/configuration/.env.${process.env.NODE_ENV}`,
-                load: [configuration_1.default]
+                load: [configuration_1.default],
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
-                name: 'study',
+                name: "study",
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
-                useFactory: (configService) => (Object.assign({}, configService.get('database')))
+                useFactory: (configService) => (Object.assign({}, configService.get("database"))),
             }),
+            user_module_1.UserModule,
         ],
         controllers: [],
         providers: [],
